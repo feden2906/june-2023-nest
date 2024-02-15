@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 import { SwaggerHelper } from './common/helpers/swagger.helper';
+import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +15,7 @@ async function bootstrap() {
       type: 'http',
       scheme: 'bearer',
       bearerFormat: 'JWT',
-      in: 'header'
+      in: 'header',
     })
     .build();
   const document = SwaggerModule.createDocument(app, config);
@@ -23,10 +24,10 @@ async function bootstrap() {
     swaggerOptions: {
       docExpansion: 'list',
       defaultModelExpandDepth: 3,
-      persistAuthorization: true
-    }
+      persistAuthorization: true,
+    },
   });
 
   await app.listen(3000);
 }
-bootstrap();
+void bootstrap();

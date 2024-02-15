@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
+
+import { CacheCustom } from '../../common/decorators/cache-method.decorator';
 import { CreateUserDto } from './dto/request/create-user.dto';
 import { UpdateUserDto } from './dto/request/update-user.dto';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
+  public async create(createUserDto: CreateUserDto): Promise<any> {
     return 'This action adds a new user';
   }
 
-  findAll() {
+  public async findAll(): Promise<string> {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
+  @CacheCustom(5000)
+  public async findOne(id: number): Promise<string> {
     return `This action returns a #${id} user`;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  public async update(
+    id: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<string> {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
+  public async remove(id: number): Promise<string> {
     return `This action removes a #${id} user`;
   }
 }
