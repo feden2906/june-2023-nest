@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { CacheCustom } from '../../common/decorators/cache-method.decorator';
-import { CreateUserDto } from './dto/request/create-user.dto';
-import { UpdateUserDto } from './dto/request/update-user.dto';
+import { CacheCustom } from '../../../common/decorators/cache-method.decorator';
+import { CreateUserDto } from '../models/dto/request/create-user.dto';
+import { UpdateUserDto } from '../models/dto/request/update-user.dto';
 
 @Injectable()
 export class UserService {
