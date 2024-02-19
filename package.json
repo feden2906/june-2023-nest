@@ -61,6 +61,11 @@
   "lint-staged": {
     "{src,apps,libs,test}/**/*.ts": "eslint --fix"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "engines": {
     "node": ">=20.0.0 <21.0.0"
   },
