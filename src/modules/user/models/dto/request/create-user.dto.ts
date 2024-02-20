@@ -18,7 +18,7 @@ export class CreateUserDto {
   @IsString()
   @Length(3, 50)
   @Transform(TransformHelper.trim())
-            name?: string;
+  name?: string;
 
   @IsInt()
   @Min(16)
