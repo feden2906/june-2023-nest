@@ -31,7 +31,7 @@ module.exports = {
     "import/newline-after-import": ["error", { "count": 1 }],
     "import/no-duplicates": "error",
     "prettier/prettier": ["error", { "endOfLine": "auto" }],
-    'no-console': 'warn',
+    'no-console': 'error',
     'sort-imports': ['error', {
       'ignoreCase': true,
       'ignoreDeclarationSort': true,
