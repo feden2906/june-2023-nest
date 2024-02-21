@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  june-2023-postgres:
+    image: postgres:16.1
+    ports:
+      - '${POSTGRES_PORT}:5432'
+    environment:
+      POSTGRES_USER: '${POSTGRES_USER:-user}'
+      POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-password}'
+      POSTGRES_DB: '${POSTGRES_DB:-june-2023}'
+    volumes:
+      - june-2023-api-db:/var/lib/postgresql/june-2023
+
+  june-2023-redis:
+    image: redis:7.2.3
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    command: >
+      --requirepass '${REDIS_PASSWORD:-redispass}'
+    restart: unless-stopped
+
+  june-2023-s3:
+    image: quay.io/minio/minio:latest
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    ports:
+      - "7000:9000"
+      - "7001:9001"
+    volumes:
+      - /june-2023-api-s3-data:/usr/src/app/s3
+    environment:
+      - MINIO_ROOT_USER=user
+      - MINIO_ROOT_PASSWORD=password
+
+volumes:
+  june-2023-api-db:
+  june-2023-api-s3:
+
