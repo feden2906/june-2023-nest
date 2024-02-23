@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 
 import { CacheCustom } from '../../../common/decorators/cache-method.decorator';
 import { CreateUserDto } from '../models/dto/request/create-user.dto';
@@ -16,6 +16,7 @@ export class UserService {
 
   @CacheCustom(5000)
   public async findOne(id: number): Promise<string> {
+    throw new UnprocessableEntityException('User not found');
     return `This action returns a #${id} user`;
   }
 
