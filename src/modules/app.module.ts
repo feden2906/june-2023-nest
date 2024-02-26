@@ -5,6 +5,7 @@ import configuration from '../configs/configs';
 import { HealthModule } from './health/health.module';
 import { PostgresModule } from './postgres/postgres.module';
 import { UserModule } from './user/user.module';
+import { RepositoryModule } from './repository/repository.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module';
     }),
     UserModule,
     HealthModule,
+    RepositoryModule,
   ],
   controllers: [],
   providers: [],
