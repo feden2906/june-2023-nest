@@ -1,5 +1,5 @@
 export class TransformHelper {
-  public static trim() {
-    return ({ value }) => value.trim();
+  public static trim({ value }) {
+    return value ? value.trim() : value;
   }
 }

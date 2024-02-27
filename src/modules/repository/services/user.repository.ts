@@ -1,7 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 
 import { UserEntity } from '../../../database/entities/user.entity';
-import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
@@ -10,6 +10,9 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   public async asdasd() {
-    return await this.find();
+    return await this.find({
+      where: { name: 'qwe' },
+      relations: { articles: true },
+    });
   }
 }

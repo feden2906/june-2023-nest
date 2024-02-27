@@ -6,10 +6,12 @@ import { HealthModule } from './health/health.module';
 import { PostgresModule } from './postgres/postgres.module';
 import { UserModule } from './user/user.module';
 import { RepositoryModule } from './repository/repository.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
     PostgresModule,
+    RedisModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
