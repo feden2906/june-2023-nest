@@ -22,7 +22,7 @@ const repositories = [
 @Module({
   imports: [],
   controllers: [],
-  providers: [...repositories],
-  exports: [...repositories],
+  providers: repositories,
+  exports: repositories,
 })
 export class RepositoryModule {}

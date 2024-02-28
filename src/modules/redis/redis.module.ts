@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Redis } from 'ioredis';
 
-import { Config, PostgresConfig, RedisConfig } from '../../configs/config.type';
+import { Config, RedisConfig } from '../../configs/config.type';
 import { RedisService } from './redis.service';
 
 const redisProvider = {
@@ -23,5 +23,6 @@ const redisProvider = {
   imports: [],
   controllers: [],
   providers: [redisProvider, RedisService],
+  exports: [RedisService],
 })
 export class RedisModule {}

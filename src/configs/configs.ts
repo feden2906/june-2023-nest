@@ -17,4 +17,13 @@ export default (): Config => ({
     port: parseInt(process.env.REDIS_PORT) || 6379,
     password: process.env.REDIS_PASSWORD,
   },
+  jwt: {
+    accessTokenSecret: process.env.AUTH_ACCESS_TOKEN_SECRET || 'access secret',
+    accessTokenExpiration:
+      parseInt(process.env.AUTH_ACCESS_TOKEN_EXPIRATION) || 3600,
+    refreshTokenSecret:
+      process.env.AUTH_REFRESH_TOKEN_SECRET || 'refresh secret',
+    refreshTokenExpiration:
+      parseInt(process.env.AUTH_REFRESH_TOKEN_EXPIRATION) || 86400,
+  },
 });
