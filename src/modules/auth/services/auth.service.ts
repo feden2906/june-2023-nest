@@ -3,6 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 import { RefreshTokenRepository } from '../../repository/services/refresh-token.repository';
 import { UserRepository } from '../../repository/services/user.repository';
+import { UserService } from '../../user/services/user.service';
 import { SignInRequestDto } from '../dto/request/sign-in.request.dto';
 import { SignUpRequestDto } from '../dto/request/sign-up.request.dto';
 import { AuthUserResponseDto } from '../dto/response/auth-user.response.dto';
@@ -15,6 +16,7 @@ import { TokenService } from './token.service';
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly userService: UserService,
     private readonly tokenService: TokenService,
     private readonly authCacheService: AuthCacheService,
     private readonly userRepository: UserRepository,
@@ -22,6 +24,8 @@ export class AuthService {
   ) {}
 
   public async signUp(dto: SignUpRequestDto): Promise<AuthUserResponseDto> {
+    await this.userService.isEmailUniqueOrThrow(dto.email);
+
     const password = await bcrypt.hash(dto.password, 10);
 
     const user = await this.userRepository.save(

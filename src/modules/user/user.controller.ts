@@ -1,18 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Put } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { SkipAuth } from '../auth/decorators/skip-auth.decorator';
-import { CreateUserDto } from './models/dto/request/create-user.dto';
-import { UpdateUserDto } from './models/dto/request/update-user.dto';
-import { UserResponseDto } from './models/dto/response/user.response.dto';
+import { UpdateUserRequestDto } from './models/dto/request/update-user.request.dto';
 import { UserService } from './services/user.service';
 
 @ApiTags('User')
@@ -20,36 +9,22 @@ import { UserService } from './services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @SkipAuth()
-  @Post()
-  public async create(@Body() dto: CreateUserDto): Promise<UserResponseDto> {
-    return await this.userService.create(dto);
-  }
-
-  @SkipAuth()
-  @Get()
-  public async findAll(): Promise<string> {
-    return await this.userService.findAll();
+  @ApiBearerAuth()
+  @Get('me')
+  public async findMy(): Promise<string> {
+    return await this.userService.findOne(12);
   }
 
   @ApiBearerAuth()
+  @Put('me')
+  public async update(
+    @Body() updateUserDto: UpdateUserRequestDto,
+  ): Promise<string> {
+    return await this.userService.update(12, updateUserDto);
+  }
+
   @Get(':id')
   public async findOne(@Param('id') id: string): Promise<string> {
     return await this.userService.findOne(+id);
-  }
-
-  @ApiBearerAuth()
-  @Patch(':id')
-  public async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<string> {
-    return await this.userService.update(+id, updateUserDto);
-  }
-
-  @ApiBearerAuth()
-  @Delete(':id')
-  public async remove(@Param('id') id: string): Promise<string> {
-    return await this.userService.remove(+id);
   }
 }

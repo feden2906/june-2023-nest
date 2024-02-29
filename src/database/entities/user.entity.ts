@@ -1,19 +1,19 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 
 import { ArticleEntity } from './article.entity';
+import { CommentEntity } from './comment.entity';
+import { TableNameEnum } from './enums/table-name.enum';
+import { FollowEntity } from './follow.entity';
 import { LikeEntity } from './like.entity';
 import { BaseEntity } from './models/base.entity';
 import { RefreshTokenEntity } from './refresh-token.entity';
-import { CommentEntity } from './comment.entity';
-import { FollowEntity } from './follow.entity';
-import { TableNameEnum } from './enums/table-name.enum';
 
 @Entity(TableNameEnum.USERS)
 export class UserEntity extends BaseEntity {
   @Column('text')
   name: string;
 
-  @Column('text')
+  @Column('text', { unique: true })
   email: string;
 
   @Column('text', { select: false })
