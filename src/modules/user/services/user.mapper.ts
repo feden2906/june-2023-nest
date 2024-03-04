@@ -9,6 +9,7 @@ export class UserMapper {
       email: userEntity.email,
       bio: userEntity.bio,
       image: userEntity.image,
+      isFollowed: !!userEntity.followings?.[0],
     };
   }
 }

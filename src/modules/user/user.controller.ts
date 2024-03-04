@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
@@ -31,9 +42,9 @@ export class UserController {
   }
 
   @SkipAuth()
-  @Get(':id')
+  @Get(':userId')
   public async getPublicUser(
-    @Param('id', ParseUUIDPipe) userId: string,
+    @Param('userId', ParseUUIDPipe) userId: string,
   ): Promise<UserResponseDto> {
     return await this.userService.getPublicUser(userId);
   }

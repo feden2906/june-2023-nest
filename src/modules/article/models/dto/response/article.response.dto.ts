@@ -7,5 +7,6 @@ export class ArticleResponseDto {
   body: string;
   created: Date;
   updated: Date;
+  isLiked: boolean;
   user?: UserResponseDto;
 }
