@@ -6,4 +6,5 @@ export class CreateArticleRequestDto extends PickType(BaseArticleRequestDto, [
   'title',
   'body',
   'description',
+  'tags',
 ]) {}

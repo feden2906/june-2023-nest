@@ -7,7 +7,6 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { ErrorHttpStatusCode } from '@nestjs/common/utils/http-error-by-code.util';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

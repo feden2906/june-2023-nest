@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { ArticleService } from './services/article.service';
 import { ArticleController } from './article.controller';
+import { ArticleService } from './services/article.service';
 
 @Module({
   imports: [],

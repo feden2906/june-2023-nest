@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, Max, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class ArticleListRequestDto {
   @Type(() => Number)
@@ -14,4 +14,12 @@ export class ArticleListRequestDto {
   @Min(0)
   @IsOptional()
   offset?: number = 0;
+
+  @IsOptional()
+  @IsString()
+  tag?: string;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
 }

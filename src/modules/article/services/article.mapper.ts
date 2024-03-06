@@ -16,6 +16,7 @@ export class ArticleMapper {
       created: articleEntity.created,
       updated: articleEntity.updated,
       isLiked: !!articleEntity.likes?.[0],
+      tags: articleEntity.tags ? articleEntity.tags.map((tag) => tag.name) : [],
       user: articleEntity.user
         ? UserMapper.toResponseDto(articleEntity.user)
         : null,
