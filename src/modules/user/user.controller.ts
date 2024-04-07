@@ -3,14 +3,19 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
-  Patch,
+  ParseUUIDPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { CreateUserDto } from './models/dto/request/create-user.dto';
-import { UpdateUserDto } from './models/dto/request/update-user.dto';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import { SkipAuth } from '../auth/decorators/skip-auth.decorator';
+import { IUserData } from '../auth/interfaces/user-data.interface';
+import { UpdateUserRequestDto } from './models/dto/request/update-user.request.dto';
 import { UserResponseDto } from './models/dto/response/user.response.dto';
 import { UserService } from './services/user.service';
 
@@ -19,34 +24,48 @@ import { UserService } from './services/user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  public async create(@Body() dto: CreateUserDto): Promise<UserResponseDto> {
-    return await this.userService.create(dto);
-  }
-
-  @Get()
-  public async findAll(): Promise<string> {
-    return await this.userService.findAll();
+  @ApiBearerAuth()
+  @Get('me')
+  public async findMe(
+    @CurrentUser() userData: IUserData,
+  ): Promise<UserResponseDto> {
+    return await this.userService.findMe(userData);
   }
 
   @ApiBearerAuth()
-  @Get(':id')
-  public async findOne(@Param('id') id: string): Promise<string> {
-    return await this.userService.findOne(+id);
+  @Put('me')
+  public async updateMe(
+    @CurrentUser() userData: IUserData,
+    @Body() dto: UpdateUserRequestDto,
+  ): Promise<UserResponseDto> {
+    return await this.userService.updateMe(userData, dto);
   }
 
-  @ApiBearerAuth()
-  @Patch(':id')
-  public async update(
-    @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ): Promise<string> {
-    return await this.userService.update(+id, updateUserDto);
+  @SkipAuth()
+  @Get(':userId')
+  public async getPublicUser(
+    @Param('userId', ParseUUIDPipe) userId: string,
+  ): Promise<UserResponseDto> {
+    return await this.userService.getPublicUser(userId);
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @ApiBearerAuth()
-  @Delete(':id')
-  public async remove(@Param('id') id: string): Promise<string> {
-    return await this.userService.remove(+id);
+  @Post(':userId/follow')
+  public async follow(
+    @Param('userId', ParseUUIDPipe) userId: string,
+    @CurrentUser() userData: IUserData,
+  ): Promise<void> {
+    await this.userService.follow(userId, userData);
+  }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
+  @Delete(':userId/follow')
+  public async unfollow(
+    @Param('userId', ParseUUIDPipe) userId: string,
+    @CurrentUser() userData: IUserData,
+  ): Promise<void> {
+    await this.userService.unfollow(userId, userData);
   }
 }
